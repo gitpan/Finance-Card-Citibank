@@ -1,0 +1,52 @@
+2006-01-05 22:35  mgrimes
+
+	* .releaserc, README.head: Getting set to release
+
+2006-01-05 22:23  mgrimes
+
+	* Buil.PL, Build.PL: Fixed filename error.
+
+2006-01-05 22:20  mgrimes
+
+	* Buil.PL, MANIFEST, Makefile.PL, t/10-check_balance.t: [no log
+	  message]
+
+2006-01-05 21:04  mgrimes
+
+	* MANIFEST, Makefile.PL, README.head, lib/Finance/Card/Citibank.pm,
+	  t/00-new.t, t/10-check_balance.t: Changed name from
+	  Finance::Bank::Citigroup to Finance::Card::Citibank
+
+2005-07-14 11:39  mgrimes
+
+	* Makefile.PL: Added the WWW::Mechanize new version.
+
+2005-07-13 17:49  mgrimes
+
+	* t/00-new.t: still need to fix tests
+
+2005-07-13 17:48  mgrimes
+
+	* tmp.log: removed tmp.log
+
+2005-07-13 17:13  mgrimes
+
+	* MANIFEST, Makefile.PL: Added pod Fixed change in the schwab
+	  account
+
+2005-07-09 09:21  mgrimes
+
+	* t/10-check_balance.t: minor changes
+
+2005-07-05 18:42  mgrimes
+
+	* MANIFEST, Makefile.PL, README.head, t.pl, tmp.log, t/00-new.t,
+	  t/10-check_balance.t, t/98-pod.t, t/99-podcoverage.t: Initial
+	  revision
+
+2005-07-05 18:42  mgrimes
+
+	* MANIFEST, Makefile.PL, README.head, t.pl, tmp.log, t/00-new.t,
+	  t/10-check_balance.t, t/98-pod.t, t/99-podcoverage.t: initial
+	  import
+
