@@ -3,7 +3,7 @@ package Finance::Card::Citibank;
 ###########################################################################
 # Finance::Card::Citibank
 # Mark V. Grimes
-# $Id: Citibank.pm,v 1.1 2006/01/06 05:04:39 mgrimes Exp $
+# $Id: Citibank.pm,v 1.2 2007/01/18 03:45:45 mgrimes Exp $
 #
 # Check you credit card balances.
 # Copyright (c) 2005 Mark V. Grimes (mgrimes@cpan.org).
@@ -25,7 +25,7 @@ use Carp;
 use WWW::Mechanize;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.1 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.2 $ =~ /(\d+)\.(\d+)/);
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -41,7 +41,7 @@ sub check_balance {
 
     my $self = bless { %opts }, $class;
 
-    $ua->get("https://www.citibank.com/us/cards/index.jsp") 
+    $ua->get("http://www.citicards.com/cards/wv/home.do") 
 		or die "couldn't load the initial page";
 
     $ua->submit_form(
@@ -101,7 +101,8 @@ sub check_balance {
 
 package Finance::Card::Citibank::Account;
 # Basic OO smoke-and-mirrors Thingy
-no strict;
+# no strict; 
+our $AUTOLOAD;
 sub AUTOLOAD { my $self=shift; $AUTOLOAD =~ s/.*:://; $self->{$AUTOLOAD} }
 
 1;

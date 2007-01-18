@@ -1,10 +1,9 @@
---- #YAML:1.0
+---
 name: Finance-Card-Citibank
-version: 1.01
+version: 1.02
 author:
-  - Mark V. Grimes<mgrimes@cpan.org>
-abstract: |-
-  Check your Citigroup credit card accounts from Perl
+  - 'Mark V. Grimes<mgrimes@cpan.org>'
+abstract: Check your Citigroup credit card accounts from Perl
 license: perl
 requires:
   Carp: 0
@@ -12,8 +11,8 @@ requires:
 provides:
   Finance::Card::Citibank:
     file: lib/Finance/Card/Citibank.pm
-    version: 1.01
+    version: 1.02
   Finance::Card::Citibank::Account:
     file: lib/Finance/Card/Citibank.pm
-    version: 1.01
+    version: 1.02
 generated_by: Module::Build version 0.2611
