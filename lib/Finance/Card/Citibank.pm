@@ -3,7 +3,7 @@ package Finance::Card::Citibank;
 ###########################################################################
 # Finance::Card::Citibank
 # Mark V. Grimes
-# $Id: Citibank.pm,v 1.2 2007/01/18 03:45:45 mgrimes Exp $
+# $Id: Citibank.pm,v 1.3 2007/01/19 01:39:35 mgrimes Exp $
 #
 # Check you credit card balances.
 # Copyright (c) 2005 Mark V. Grimes (mgrimes@cpan.org).
@@ -25,7 +25,7 @@ use Carp;
 use WWW::Mechanize;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.2 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.3 $ =~ /(\d+)\.(\d+)/);
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -179,7 +179,7 @@ Mark V. Grimes<mgrimes@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by mgrimes
+Copyright (C) 2005-7 by mgrimes
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.2 or,
