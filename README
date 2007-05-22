@@ -53,8 +53,13 @@ THANKS
     Simon Cozens for "Finance::Bank::LloydsTSB". The interface to this
     module, some code and the pod were all taken from Simon's module.
 
+TODO
+    Currently, only the first account is picked up. It is an easy fix (I
+    think) to grab other accounts, but I don't need it. If someone out there
+    does need multiple accounts, let me know and I will implement it.
+
 AUTHOR
-    Mark V. Grimes<mgrimes@cpan.org>
+    Mark V. Grimes <mgrimes@cpan.org>
 
 COPYRIGHT AND LICENSE
     Copyright (C) 2005-7 by mgrimes

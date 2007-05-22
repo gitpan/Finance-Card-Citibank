@@ -3,7 +3,7 @@ package Finance::Card::Citibank;
 ###########################################################################
 # Finance::Card::Citibank
 # Mark V. Grimes
-# $Id: Citibank.pm,v 1.3 2007/01/19 01:39:35 mgrimes Exp $
+# $Id: Citibank.pm,v 1.5 2007/05/22 22:47:09 mgrimes Exp $
 #
 # Check you credit card balances.
 # Copyright (c) 2005 Mark V. Grimes (mgrimes@cpan.org).
@@ -25,7 +25,7 @@ use Carp;
 use WWW::Mechanize;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.3 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.5 $ =~ /(\d+)\.(\d+)/);
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -47,8 +47,9 @@ sub check_balance {
     $ua->submit_form(
     	form_name 	=> 'LOGIN',
     	fields		=> {
-    			'USERNAME'	=> $opts{username},
-    			'PASSWORD'	=> $opts{password},
+    			'USERNAME'	    => $opts{username},
+    			'PASSWORD'	    => $opts{password},
+                'NEXT_SCREEN'   => '/AccountSummary',
     		},
     ) or die "couldn't submit the login form";
 
@@ -64,8 +65,8 @@ sub check_balance {
 					
 	 				<td[^>]*>\s*
 	 				([\w, ]*)\s*		# account name
-	 				</td></tr>\s*
-	 				<tr><td[^>]*>\s*
+	 				</td>\s*</tr>\s*
+	 				<tr>\s*<td[^>]*>\s*
 				    ([-X\d]*)\s*		# account number
 			      	</td>
      !xi;
@@ -173,9 +174,15 @@ to me, but is provided under B<NO GUARANTEE>, explicit or implied.
 Simon Cozens for C<Finance::Bank::LloydsTSB>. The interface to this module,
 some code and the pod were all taken from Simon's module.
 
+=head1 TODO
+
+Currently, only the first account is picked up. It is an easy fix (I think)
+to grab other accounts, but I don't need it. If someone out there does need
+multiple accounts, let me know and I will implement it.
+
 =head1 AUTHOR
 
-Mark V. Grimes<mgrimes@cpan.org>
+Mark V. Grimes <mgrimes@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
