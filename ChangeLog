@@ -1,100 +1,25 @@
-2007-05-22 15:47  mgrimes
+2007-10-29 17:21  mgrimes
 
-	* lib/Finance/Card/Citibank.pm: Added a TODO section of the pod
+	* ., .cvsignore, .releaserc, Build.PL, MANIFEST, META.yml,
+	  Makefile.PL, lib/Finance/Card/Citibank.pm, t.pl,
+	  t/10-check_balance.t, t/96-kwalitee.t, t/97-critic.t, t/98-pod.t,
+	  t/99-podcoverage.t: Updated to work with the new citi format
+	  TODO: Still need to deal with multiple accounts
+	  Changed author tests to look for TEST_AUTHOR
+	  Converted to svn release, etc
 
-2007-05-22 15:45  mgrimes
+2007-10-24 22:58  mgrimes
 
-	* lib/Finance/Card/Citibank.pm: Updated regex to keep up with
-	  changes at Citibank
+	* lib/Finance/Card/Citibank.pm: Add mail-archive
 
-2007-05-04 11:14  mgrimes
+2007-09-19 17:26  mgrimes
 
-	* MANIFEST, samples/get_balances.pl: Added an example
-
-2007-01-18 18:18  mgrimes
-
-	* .cvsignore: added cvsignore file
-
-2007-01-18 18:06  mgrimes
-
-	* README: README Copyright changedd
-
-2007-01-18 17:39  mgrimes
-
-	* lib/Finance/Card/Citibank.pm: Made a changed to update
-	  version--stupid CVS
-
-2007-01-18 17:36  mgrimes
-
-	* t/: 97-critic.t, 98-pod.t, 99-podcoverage.t: Fixed more bugs in
-	  the tests
-
-2007-01-17 20:04  mgrimes
-
-	* MANIFEST.skip: Fix a release issue in the .skip file
-
-2007-01-17 19:59  mgrimes
-
-	* MANIFEST.skip: Added MANIFEST.skip
-
-2007-01-17 19:45  mgrimes
-
-	* MANIFEST, lib/Finance/Card/Citibank.pm, t/97-critic.t,
-	  t/perlcriticrc: Updated for Citi's new cards page
-
-2006-01-05 22:45  mgrimes
-
-	* README: Update the README
-
-2006-01-05 22:35  mgrimes
-
-	* .releaserc, README.head: Getting set to release
-
-2006-01-05 22:23  mgrimes
-
-	* Buil.PL, Build.PL: Fixed filename error.
-
-2006-01-05 22:20  mgrimes
-
-	* Buil.PL, MANIFEST, Makefile.PL, t/10-check_balance.t: [no log
-	  message]
-
-2006-01-05 21:04  mgrimes
-
-	* MANIFEST, Makefile.PL, README.head, lib/Finance/Card/Citibank.pm,
-	  t/00-new.t, t/10-check_balance.t: Changed name from
-	  Finance::Bank::Citigroup to Finance::Card::Citibank
-
-2005-07-14 11:39  mgrimes
-
-	* Makefile.PL: Added the WWW::Mechanize new version.
-
-2005-07-13 17:49  mgrimes
-
-	* t/00-new.t: still need to fix tests
-
-2005-07-13 17:48  mgrimes
-
-	* tmp.log: removed tmp.log
-
-2005-07-13 17:13  mgrimes
-
-	* MANIFEST, Makefile.PL: Added pod Fixed change in the schwab
-	  account
-
-2005-07-09 09:21  mgrimes
-
-	* t/10-check_balance.t: minor changes
-
-2005-07-05 18:42  mgrimes
-
-	* MANIFEST, Makefile.PL, README.head, t.pl, tmp.log, t/00-new.t,
-	  t/10-check_balance.t, t/98-pod.t, t/99-podcoverage.t: Initial
-	  revision
-
-2005-07-05 18:42  mgrimes
-
-	* MANIFEST, Makefile.PL, README.head, t.pl, tmp.log, t/00-new.t,
-	  t/10-check_balance.t, t/98-pod.t, t/99-podcoverage.t: initial
-	  import
+	* ., .cvsignore, .releaserc, Build.PL, ChangeLog, MANIFEST,
+	  MANIFEST.skip, META.yml, Makefile.PL, README, lib, lib/Finance,
+	  lib/Finance/Card, lib/Finance/Card/Citibank.pm, samples,
+	  samples/get_balances.pl, t, t.pl, t/00-new.t,
+	  t/10-check_balance.t, t/97-critic.t, t/98-pod.t,
+	  t/99-podcoverage.t, t/perlcriticrc: Moved cvs files to svn
+	  (without history)
+	  Look in the cvs/Perl repos for history
 

@@ -19,6 +19,7 @@ BEGIN { use_ok( 'Finance::Card::Citibank' ); };
 my @accounts = Finance::Card::Citibank->check_balance(
     			'username'	=> $userid,
     			'password'	=> $passwd,
+                'log'       => 'out.html',
 		 );
 
 ok @accounts, "check_balance returned a non-empty array";

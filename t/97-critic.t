@@ -1,9 +1,15 @@
-use Test::More;
-eval "use Test::Perl::Critic 0.05 (-profile => 't/perlcriticrc', -severity => 3)";
-plan skip_all => "Test::Perl::Critic 0.05 required for testing style" if $@;
-plan skip_all => 'set TEST_STYLE to enable this test' unless $ENV{TEST_STYLE};
-
 use strict;
 use warnings;
+use File::Spec;
+use Test::More;
 
+plan( skip_all => 'Author test. Set $ENV{TEST_AUTHOR} to a true value to run.' )
+    unless $ENV{TEST_AUTHOR};
+
+eval { require Test::Perl::Critic; };
+plan( skip_all => ' Test::Perl::Critic required to criticise code ' ) if $@;
+
+my $rcfile = File::Spec->catfile( 't', 'perlcriticrc' );
+Test::Perl::Critic->import( -profile => $rcfile, -severity => 3 );
 all_critic_ok();
+

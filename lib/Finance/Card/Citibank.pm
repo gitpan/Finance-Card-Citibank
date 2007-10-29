@@ -3,7 +3,6 @@ package Finance::Card::Citibank;
 ###########################################################################
 # Finance::Card::Citibank
 # Mark V. Grimes
-# $Id: Citibank.pm,v 1.5 2007/05/22 22:47:09 mgrimes Exp $
 #
 # Check you credit card balances.
 # Copyright (c) 2005 Mark V. Grimes (mgrimes@cpan.org).
@@ -24,8 +23,7 @@ use warnings;
 use Carp;
 use WWW::Mechanize;
 
-use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.5 $ =~ /(\d+)\.(\d+)/);
+our $VERSION = '1.60';
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -36,67 +34,84 @@ our $ua = WWW::Mechanize->new(
 
 sub check_balance {
     my ($class, %opts) = @_;
-    croak "Must provide a password" unless exists $opts{password};
-    croak "Must provide a username" unless exists $opts{username};
-
     my $self = bless { %opts }, $class;
+    my $content;
 
-    $ua->get("http://www.citicards.com/cards/wv/home.do") 
-		or die "couldn't load the initial page";
+    if( $opts{content} ){
+        # If we give it a file, use the file rather than downloading
+        local $/;
+        open my $fh, "<", $opts{content} or die;
+        $content = <$fh>;
+        close $fh;
+    } else {
+        croak "Must provide a password" unless exists $opts{password};
+        croak "Must provide a username" unless exists $opts{username};
 
-    $ua->submit_form(
-    	form_name 	=> 'LOGIN',
-    	fields		=> {
-    			'USERNAME'	    => $opts{username},
-    			'PASSWORD'	    => $opts{password},
-                'NEXT_SCREEN'   => '/AccountSummary',
-    		},
-    ) or die "couldn't submit the login form";
+        $ua->get("http://www.citicards.com/cards/wv/home.do") 
+            or die "couldn't load the initial page";
 
-	# TODO: pull up multiple account if there are any
-	$ua->submit_form(
-		form_number => 2,
-	) or die "couldn't submit the account selection form";
+        $ua->submit_form(
+            form_name 	=> 'LOGIN',
+            fields		=> {
+                    'USERNAME'	    => $opts{username},
+                    'PASSWORD'	    => $opts{password},
+                    'NEXT_SCREEN'   => '/AccountSummary',
+                },
+        ) or die "couldn't submit the login form";
+
+        $ua->submit_form(
+            form_number => 2,
+        ) or die "couldn't submit the account selection form";
+        $content = $ua->content;
+    }
 	
-	my @accounts;
-
-	my ($name, $account_no) = $ua->content =~
-		m!
-					
-	 				<td[^>]*>\s*
-	 				([\w, ]*)\s*		# account name
-	 				</td>\s*</tr>\s*
-	 				<tr>\s*<td[^>]*>\s*
-				    ([-X\d]*)\s*		# account number
-			      	</td>
-     !xi;
-	warn "couldn't find any accounts" unless defined $name;
-	     
-	my ($balance) = $ua->content =~
-		m!
-			<td[^>]*>Current\sBalance.*?</td>\s*
-      		<td[^>]*>\$([\d,\.-]*)</td>
-      	 !sxi;
-
-	$balance =~ s/,//g;
-	$balance *= -1;
-	
-	# print "Account: $account_no\n";
-	# print "Balance: $balance\n";
 	if( $opts{log} ){
+        # Dump to the filename passed in log
 		open( my $fh,">", $opts{log});
 		print $fh $ua->content;
 		close $fh;
 	}
 
-	push @accounts, (bless {
-		balance		=> $balance,
-		name		=> $name,
-		sort_code	=> $account_no,
-		account_no	=> $account_no,
-		# parent		=> $self,
-		statement	=> undef,
-	}, "Finance::Card::Citibank::Account");
+    # TODO: deal with multiple accounts... seems to use js to get other accounts?
+	my @accnts = $content =~
+		m!
+          <span\sclass="prodName"><a\sname="hide1c"></a>(.*?)</span></td>\s*
+          </tr>\s*
+          <tr>\s*
+          <td>&nbsp;(Account\sending\sin:\s*\d+)</td>\s*
+          .*?
+          Current\sBalance.*?
+          </tr>\s*
+          <tr>\s*
+          <td\s[^>]*><div[^>]*><span\sclass="balNdue">\$([\d,\.]+)</span></div></td>
+     !xisg;
+	warn "couldn't find any accounts" unless @accnts;
+
+	my @accounts;
+    while( @accnts ){
+        my ($name, $account_no, $balance)
+                = ( shift @accnts, shift @accnts, shift @accnts );
+
+        $name       =~ s/&[^;]*;//g;
+        $name       =~ s/<[^>]*>//g;
+        $account_no =~ s/\s+/ /g;
+        $balance    =~ s/,//g;
+        $balance    *= -1;
+	
+        print "Name: $name\n";
+        print "Account: $account_no\n";
+        print "Balance: $balance\n";
+
+        push @accounts, (bless {
+            balance		=> $balance,
+            name		=> $name,
+            sort_code	=> $account_no,
+            account_no	=> $account_no,
+            # parent		=> $self,
+            statement	=> undef,
+        }, "Finance::Card::Citibank::Account");
+    }
+
     return @accounts;
 }
 
