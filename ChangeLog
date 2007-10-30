@@ -1,3 +1,7 @@
+2007-10-29 17:25  mgrimes
+
+	* ChangeLog: Updated changelog
+
 2007-10-29 17:21  mgrimes
 
 	* ., .cvsignore, .releaserc, Build.PL, MANIFEST, META.yml,

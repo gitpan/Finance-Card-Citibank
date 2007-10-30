@@ -4,16 +4,16 @@ use strict;
 use warnings;
 
 use Test::More;
+use Finance::Card::Citibank;
 
 my $userid = $ENV{F_C_CITIBANK_USERID};
 my $passwd = $ENV{F_C_CITIBANK_PASSWD};
 
 plan skip_all => "- Need password to fully test. To enable tests set F_C_CITIBANK_USERID F_C_CITIBANK_PASSWD environment variables."
 		unless $userid && $passwd;
-plan tests => 3;
+plan tests => 2;
 
 # Can we load the library?
-BEGIN { use_ok( 'Finance::Card::Citibank' ); };
 
 # Create client with ordered list of arguements
 my @accounts = Finance::Card::Citibank->check_balance(
