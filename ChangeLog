@@ -1,3 +1,20 @@
+2007-11-06 19:23  mgrimes
+
+	* .: Configured svn:ignore
+
+2007-11-06 19:05  mgrimes
+
+	* lib/Finance/Card/Citibank.pm: Removed extra debugging info
+
+2007-10-30 18:24  mgrimes
+
+	* META.yml: svn wants META.yml checked in
+
+2007-10-30 18:23  mgrimes
+
+	* ChangeLog, lib/Finance/Card/Citibank.pm, t/10-check_balance.t:
+	  Removed use_ok from t/10- test. It is already checked in 00-new.
+
 2007-10-29 17:25  mgrimes
 
 	* ChangeLog: Updated changelog

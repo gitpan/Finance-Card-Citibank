@@ -11,7 +11,7 @@ my $passwd = $ENV{F_C_CITIBANK_PASSWD};
 
 plan skip_all => "- Need password to fully test. To enable tests set F_C_CITIBANK_USERID F_C_CITIBANK_PASSWD environment variables."
 		unless $userid && $passwd;
-plan tests => 2;
+plan tests => 3;
 
 # Can we load the library?
 
@@ -19,7 +19,8 @@ plan tests => 2;
 my @accounts = Finance::Card::Citibank->check_balance(
     			'username'	=> $userid,
     			'password'	=> $passwd,
-                'log'       => 'out.html',
+                # 'log'       => 'out.html',
+                # 'content'   => 'out.html',
 		 );
 
 ok @accounts, "check_balance returned a non-empty array";

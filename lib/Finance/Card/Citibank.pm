@@ -23,7 +23,7 @@ use warnings;
 use Carp;
 use WWW::Mechanize;
 
-our $VERSION = '1.61';
+our $VERSION = '1.63';
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -75,7 +75,7 @@ sub check_balance {
     # TODO: deal with multiple accounts... seems to use js to get other accounts?
 	my @accnts = $content =~
 		m!
-          <span\sclass="prodName"><a\sname="hide1c"></a>(.*?)</span></td>\s*
+          <span\sclass="prodName"><a\sname="view1c"></a>(.*?)</span></td>\s*
           </tr>\s*
           <tr>\s*
           <td>&nbsp;(Account\sending\sin:\s*\d+)</td>\s*
@@ -94,13 +94,14 @@ sub check_balance {
 
         $name       =~ s/&[^;]*;//g;
         $name       =~ s/<[^>]*>//g;
+        $name       =~ s/\s+/ /g;
         $account_no =~ s/\s+/ /g;
         $balance    =~ s/,//g;
         $balance    *= -1;
 	
-        print "Name: $name\n";
-        print "Account: $account_no\n";
-        print "Balance: $balance\n";
+        # warn "# Name: $name\n";
+        # warn "# Account: $account_no\n";
+        # warn "# Balance: $balance\n";
 
         push @accounts, (bless {
             balance		=> $balance,
