@@ -2,10 +2,10 @@ package Finance::Card::Citibank;
 
 ###########################################################################
 # Finance::Card::Citibank
-# Mark V. Grimes
+# Mark Grimes
 #
 # Check you credit card balances.
-# Copyright (c) 2005 Mark V. Grimes (mgrimes@cpan.org).
+# Copyright (c) 2005 Mark Grimes (mgrimes@cpan.org).
 # All rights reserved. This program is free software; you can redistribute
 # it and/or modify it under the same terms as Perl itself.
 #
@@ -23,7 +23,7 @@ use warnings;
 use Carp;
 use WWW::Mechanize;
 
-our $VERSION = '1.63';
+our $VERSION = '1.64';
 
 our $ua = WWW::Mechanize->new(
     env_proxy => 1, 
@@ -198,7 +198,7 @@ multiple accounts, let me know and I will implement it.
 
 =head1 AUTHOR
 
-Mark V. Grimes <mgrimes@cpan.org>
+Mark Grimes <mgrimes@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 

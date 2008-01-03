@@ -1,3 +1,17 @@
+2007-12-29 01:05  mgrimes
+
+	* Makefile.PL, README, lib/Finance/Card/Citibank.pm: Updated the
+	  author name, etc.
+
+2007-11-26 17:16  mgrimes
+
+	* META.yml: Removed META.yml from the repos
+
+2007-11-26 17:14  mgrimes
+
+	* lib/Finance/Card/Citibank.pm, t/10-check_balance.t: Update to
+	  track changes in Citibank site
+
 2007-11-06 19:23  mgrimes
 
 	* .: Configured svn:ignore
