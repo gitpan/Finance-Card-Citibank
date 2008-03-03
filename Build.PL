@@ -8,6 +8,7 @@ my $build = Module::Build->new(
 	requires		=> {
 						'Carp'				=> 0,
 						'WWW::Mechanize'	=> 1.00,
+						'Class::Accessor::Fast'	=> 0,
 					   },
     build_requires  => {
                         'Test::More'        => 0,

@@ -19,8 +19,8 @@ plan tests => 3;
 my @accounts = Finance::Card::Citibank->check_balance(
     			'username'	=> $userid,
     			'password'	=> $passwd,
-                # 'log'       => 'out.html',
-                # 'content'   => 'out.html',
+                # 'log'       => 'out.html',        ## debugging: where to save the page
+                # 'content'   => 'out.html',        ## debugging: file to use rather than using their website
 		 );
 
 ok @accounts, "check_balance returned a non-empty array";
@@ -28,7 +28,7 @@ isa_ok $accounts[0], 'Finance::Card::Citibank::Account', "check_balance returned
 ok $accounts[0]->account_no, 'Returned a non-false value for the account number';
 
 for (@accounts){
-	printf "# %18s : %8s / %8s : \$ %9.2f\n",
-	    $_->name, $_->sort_code, $_->account_no, $_->balance;
+	printf "# %18s (%d): %8s / %8s : \$ %9.2f\n",
+	    $_->name, $_->position, $_->sort_code, $_->account_no, $_->balance;
 }
 
