@@ -22,8 +22,10 @@ use warnings;
 
 use Carp;
 use WWW::Mechanize;
+use HTML::TreeBuilder::XPath;
+use HTML::Element;
 
-our $VERSION = '1.70';
+our $VERSION = '1.80';
 
 my $ua = WWW::Mechanize->new(
     env_proxy  => 1,
@@ -43,7 +45,8 @@ sub check_balance {
         $content = do { local $/ = undef; <$fh> };
         close $fh;
 
-    } else {
+    }
+    else {
         croak "Must provide a password" unless exists $opts{password};
         croak "Must provide a username" unless exists $opts{username};
 
@@ -68,6 +71,11 @@ sub check_balance {
         $ua->get("https://www.accountonline.com/GetDashboardAccounts")
           or confess "couldn't load GetDashboardAccounts";
         $content .= $ua->content;
+
+        $ua->get(
+"https://www.accountonline.com/cards/svc/GetDashboardNonDefaultAccounts.do"
+        ) or confess "couldn't load GetDashboardNonDefaultAccounts";
+        $content .= $ua->content;
     }
 
     if ( $opts{log} ) {
@@ -78,35 +86,32 @@ sub check_balance {
         close $fh;
     }
 
-    # Extract the relevant info into one array
-    my @accnts = $content =~ m!
-          <span\sclass="prodName"><a\sname="View(\d+)c"></a>([^\n]+?)</span></td>\s*
-          </tr>\s*
-          <tr>\s*
-          <td>&nbsp;(Account\sending\sin:\s*\d+)</td>\s*
-          .*?
-          Current\sBalance.*?
-          </tr>\s*
-          <tr>\s*
-          <td\s[^>]*><div[^>]*><span\sclass="balNdue">\$([\d,\.]+)</span></div></td>
-     !xisg;
-    carp "couldn't find any accounts" unless @accnts;
-
+    my $position = 1;
     my @accounts;
-    while (@accnts) {
-        my ( $position, $name, $account_no, $balance ) = splice @accnts, 0, 4;
 
-        $name       =~ s/&[^;]*;//g;
-        $name       =~ s/<[^>]*>//g;
-        $name       =~ s/\s+/ /g;
-        $account_no =~ s/\s+/ /g;
-        $balance    =~ s/,//g;
+    my $tree = HTML::TreeBuilder::XPath->new;
+    $tree->parse_content($content) or confess "Couldn't parse content";
+    my @accnts = $tree->findnodes('//div[@class="main_module"]');
+    for my $accnt (@accnts) {
+        my $tree = HTML::TreeBuilder::XPath->new;
+        $tree->parse_content( $accnt->as_HTML ) or confess;
+
+        my @names = $tree->findnodes('//span[@class="card_num"]');
+        next unless @names;
+        my $name = $names[0]->as_trimmed_text;
+        ## warn "# Name: $name\n";
+
+        my @balances = $tree->findnodes('//div[@class="curr_balance"]');
+        next unless @balances;
+        my $balance = $balances[0]->as_trimmed_text;
+        $balance =~ s/[\$,]//g;
         $balance *= -1;
+        ## warn "# Balance: $balance\n";
 
-        # carp "# Position: $position\n";  # i.e. "1" for the 1st account..."n" for the nth account
-        # carp "# Name: $name\n";
-        # carp "# Account: $account_no\n";
-        # carp "# Balance: $balance\n";
+        my ($account_no) = $name =~ m/(\d+)/;
+        ## warn "# Account: $account_no\n";
+
+        ## warn "# Position: $position\n";    # i.e. "1" for the 1st account..."n" for the nth account
 
         push @accounts, (
 
@@ -115,7 +120,8 @@ sub check_balance {
                 name       => $name,
                 sort_code  => $account_no,
                 account_no => $account_no,
-                position  => $position, # redundant since just = array index + 1
+                position =>
+                  $position++,    # redundant since just = array index + 1
                 statement => undef,
                 ## parent => $self,
             },

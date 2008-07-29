@@ -1,3 +1,16 @@
+2008-03-03 20:53  mgrimes
+
+	* Build.PL, lib/Finance/Card/Citibank.pm, t.pl,
+	  t/10-check_balance.t, t/99-podcoverage.t, t/perlcriticrc: Added
+	  ability to pull data from more than one account (thanks to Jon
+	  Keller for contributing the code).
+	  Minor code cleanup (perlcritic is now happy and we dropped
+	  AUTOLOAD for Class::Accessor::Fast).
+
+2008-02-14 19:12  mgrimes
+
+	* .releaserc: Update the .releaserc files to drop SF
+
 2008-01-03 02:42  mgrimes
 
 	* ., Makefile.PL, README: Update svn:ignore
