@@ -25,7 +25,7 @@ use WWW::Mechanize;
 use HTML::TreeBuilder::XPath;
 use HTML::Element;
 
-our $VERSION = '1.80';
+our $VERSION = '1.81';
 
 my $ua = WWW::Mechanize->new(
     env_proxy  => 1,
@@ -96,7 +96,7 @@ sub check_balance {
         my $tree = HTML::TreeBuilder::XPath->new;
         $tree->parse_content( $accnt->as_HTML ) or confess;
 
-        my @names = $tree->findnodes('//span[@class="card_num"]');
+        my @names = $tree->findnodes('//div[@class="card_info"]/h2/a');
         next unless @names;
         my $name = $names[0]->as_trimmed_text;
         ## warn "# Name: $name\n";

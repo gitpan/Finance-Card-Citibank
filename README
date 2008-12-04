@@ -16,11 +16,12 @@ SYNOPSIS
   
 DESCRIPTION
     This module provides a rudimentary interface to Citigroup online at
-    "https://www.citibank.com/us/cards/index.jsp". You will need either
-    "Crypt::SSLeay" or "IO::Socket::SSL" installed for HTTPS support to
-    work. "WWW::Mechanize" is required. =head1 CLASS METHODS
+    `https://www.citibank.com/us/cards/index.jsp'. You will need either
+    `Crypt::SSLeay' or `IO::Socket::SSL' installed for HTTPS support to
+    work. `WWW::Mechanize' is required. =head1 CLASS METHODS
 
   check_balance()
+
       check_balance( usename => $u, password => $p )
 
     Return an array of account objects, one for each of your bank accounts.
@@ -39,7 +40,7 @@ OBJECT METHODS
     Return the account balance as a signed floating point value.
 
 WARNING
-    This warning is verbatim from Simon Cozens' "Finance::Bank::LloydsTSB",
+    This warning is verbatim from Simon Cozens' `Finance::Bank::LloydsTSB',
     and certainly applies to this module as well.
 
     This is code for online banking, and that means your money, and that
@@ -49,7 +50,7 @@ WARNING
     but is provided under NO GUARANTEE, explicit or implied.
 
 THANKS
-    Simon Cozens for "Finance::Bank::LloydsTSB". The interface to this
+    Simon Cozens for `Finance::Bank::LloydsTSB'. The interface to this
     module, some code and the pod were all taken from Simon's module.
 
     Jon Keller added the ability to pull multiple accounts.

@@ -1,3 +1,9 @@
+2008-07-29 02:23  mgrimes
+
+	* Build.PL, lib/Finance/Card/Citibank.pm, t.pl: Updated for new
+	  Citibank site.
+	  Converted to HTML::TreeBuilder::XPath
+
 2008-03-03 20:53  mgrimes
 
 	* Build.PL, lib/Finance/Card/Citibank.pm, t.pl,
